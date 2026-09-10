@@ -12,11 +12,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const HeroBackground = () => (
   <div className="absolute inset-0 z-0 overflow-hidden">
-    <img 
-      src="/images/background.jpeg" 
-      alt="URBANAXIS Studio" 
-      className="w-full h-full object-cover object-center select-none" 
-    />
+    <picture>
+      <source media="(max-width: 767px)" srcSet="/images/potraitbackground.jpeg" />
+      <img 
+        src="/images/background.jpeg" 
+        alt="URBANAXIS Studio" 
+        className="w-full h-full object-cover object-center select-none" 
+      />
+    </picture>
     <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/30 pointer-events-none" />
   </div>
 );
