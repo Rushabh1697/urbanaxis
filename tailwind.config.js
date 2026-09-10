@@ -71,13 +71,13 @@ export default {
         "section-gap": "160px"
       },
       fontFamily: {
-        "headline-md": ["EB Garamond"],
-        "body-md": ["Manrope"],
-        "label-sm": ["Manrope"],
-        "headline-lg": ["EB Garamond"],
-        "display-lg": ["EB Garamond"],
-        "headline-lg-mobile": ["EB Garamond"],
-        "body-lg": ["Manrope"]
+        "headline-md": ["Archivo", "sans-serif"],
+        "body-md": ["Space Grotesk", "sans-serif"],
+        "label-sm": ["Space Grotesk", "sans-serif"],
+        "headline-lg": ["Archivo", "sans-serif"],
+        "display-lg": ["Archivo", "sans-serif"],
+        "headline-lg-mobile": ["Archivo", "sans-serif"],
+        "body-lg": ["Space Grotesk", "sans-serif"]
       },
       fontSize: {
         "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],

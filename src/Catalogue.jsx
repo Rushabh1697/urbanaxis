@@ -91,7 +91,7 @@ export default function Catalogue() {
                 <img 
                   src={`https://res.cloudinary.com/dnnnouh5x/image/upload/f_auto,q_auto/v${img.version}/${img.public_id}.${img.format}`}
                   alt={`${currentProject.title} - ${idx + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  className="w-full h-full object-cover grayscale-[50%] transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105"
                   loading="lazy"
                 />
               </motion.div>

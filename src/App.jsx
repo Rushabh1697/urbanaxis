@@ -20,10 +20,57 @@ const HeroBackground = () => (
     <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-black/30 pointer-events-none" />
   </div>
 );
+const MagneticButton = ({ text, className, href, to, onClick, children }) => {
+  const ref = React.useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    if (!ref.current) return;
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const Component = to ? Link : href ? 'a' : 'button';
+  const props = to ? { to } : href ? { href } : {};
+
+  return (
+    <Component
+      {...props}
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      onClick={onClick}
+      className={className}
+    >
+      <motion.span
+        animate={{ x: position.x, y: position.y }}
+        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+        className="relative z-10 block font-label-sm text-label-sm uppercase tracking-[0.3em] text-on-surface group-hover:text-surface transition-colors duration-500 pointer-events-none"
+      >
+        {text}
+      </motion.span>
+      {children}
+    </Component>
+  );
+};
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
@@ -59,7 +106,7 @@ const Navbar = () => {
         <a href="#contact" className="luxury-hover font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface/70 hover:text-on-surface transition-colors duration-500">Contact</a>
       </div>
     </nav>
-    <nav className="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-white/5 py-5 px-6 flex md:hidden justify-between items-center">
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 py-5 px-6 flex md:hidden justify-between items-center ${isScrolled ? 'bg-surface-container-lowest/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent border-transparent'}`}>
       <Link to="/"><h1 className="font-headline-md text-[18px] uppercase tracking-[0.3em] text-on-surface">URBANAXIS</h1></Link>
       <button onClick={toggleMobileMenu} className="text-on-surface p-2 focus:outline-none z-50">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -145,18 +192,15 @@ const Home = () => (
           Architecture of Quiet Intent
         </p>
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pointer-events-auto">
-          <Link to="/projects" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
-            <span className="relative z-10 font-label-sm text-label-sm uppercase tracking-[0.3em] text-on-surface group-hover:text-surface transition-colors duration-500">View Projects</span>
+          <MagneticButton text="View Projects" to="/projects" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
             <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-          </Link>
-          <Link to="/about" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
-            <span className="relative z-10 font-label-sm text-label-sm uppercase tracking-[0.3em] text-on-surface group-hover:text-surface transition-colors duration-500">About Us</span>
+          </MagneticButton>
+          <MagneticButton text="About Us" to="/about" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
             <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-          </Link>
-          <a href="#contact" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
-            <span className="relative z-10 font-label-sm text-label-sm uppercase tracking-[0.3em] text-on-surface group-hover:text-surface transition-colors duration-500">Contact</span>
+          </MagneticButton>
+          <MagneticButton text="Contact" href="#contact" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
             <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-          </a>
+          </MagneticButton>
         </div>
       </motion.div>
     </header>
@@ -165,7 +209,26 @@ const Home = () => (
     </>
   );
 
-const Projects = () => (
+const Projects = () => {
+  useGSAP(() => {
+    gsap.fromTo(
+      '.project-card',
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.projects-grid',
+          start: 'top 80%',
+        },
+      }
+    );
+  }, []);
+
+  return (
   <div className="pt-24 gsap-lazy">
     {/* Featured Projects */}
     <section className="py-section-gap bg-surface-container-lowest">
@@ -182,11 +245,11 @@ const Projects = () => (
             <h3 className="font-headline-lg text-headline-lg text-on-surface">Featured Projects</h3>
           </div>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          <Link to="/project/the-sea-dream" className="group cursor-pointer block">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 projects-grid">
+          <Link to="/project/the-sea-dream" className="group cursor-pointer block project-card opacity-0">
             <div className="aspect-[4/5] overflow-hidden mb-10 bg-surface-container relative">
               <div className="absolute inset-0 bg-surface-container-highest/20 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
-                <img alt="Exterior view of a minimalist residence" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="/images/prabhadevi-main.jpg?v=2" />
+                <img alt="Exterior view of a minimalist residence" className="w-full h-full object-cover grayscale-[50%] transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105" src="/images/prabhadevi-main.jpg?v=2" />
             </div>
             <div className="flex justify-between items-start border-t border-white/5 pt-8">
               <div>
@@ -196,10 +259,10 @@ const Projects = () => (
               <span className="font-label-sm text-label-sm text-secondary/40">01</span>
             </div>
           </Link>
-          <Link to="/project/bangalore-house" className="group cursor-pointer block">
+          <Link to="/project/bangalore-house" className="group cursor-pointer block project-card opacity-0">
             <div className="aspect-[4/5] overflow-hidden mb-10 bg-surface-container relative">
               <div className="absolute inset-0 bg-surface-container-highest/20 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
-                <img alt="Interior of a modern gallery space" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="/images/banglore-main.jpg?v=2" />
+                <img alt="Interior of a modern gallery space" className="w-full h-full object-cover grayscale-[50%] transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105" src="/images/banglore-main.jpg?v=2" />
             </div>
             <div className="flex justify-between items-start border-t border-white/5 pt-8">
               <div>
@@ -213,7 +276,7 @@ const Projects = () => (
       </div>
     </section>
   </div>
-);
+)};
 
 const Practice = () => (
   <div className="pt-24 gsap-lazy">
