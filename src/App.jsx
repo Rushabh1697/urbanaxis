@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -332,30 +332,39 @@ const GlobalLoader = () => {
     }
   }, [location.pathname, lenis]);
 
-  // Loading screen logic (only runs once on mount)
+  // Loading screen logic (triggered on route change)
   useEffect(() => {
+    setIsLoading(true);
     // Fallback timer in case video fails to load or play
     const timer = setTimeout(() => setIsLoading(false), 5000); 
     return () => clearTimeout(timer);
-  }, []);
-
-  if (!isLoading) return null;
+  }, [location.pathname]);
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-surface flex items-center justify-center pointer-events-none p-4">
-      <motion.video 
-        src="/images/loadingscreen.mp4" 
-        autoPlay
-        muted
-        playsInline
-        onEnded={() => setIsLoading(false)}
-        className="w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 object-contain mix-blend-lighten" 
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 1.2 }}
-        transition={{ duration: 0.8, ease: 'easeInOut' }}
-      />
-    </div>
+    <AnimatePresence>
+      {isLoading && (
+        <motion.div 
+          key={location.pathname}
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="fixed inset-0 z-[9999] bg-surface flex items-center justify-center pointer-events-none p-4"
+        >
+          <motion.video 
+            src="/images/loadingscreen.mp4" 
+            autoPlay
+            muted
+            playsInline
+            onEnded={() => setIsLoading(false)}
+            className="w-48 h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 object-contain mix-blend-lighten" 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.2 }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
