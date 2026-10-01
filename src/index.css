@@ -1,7 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@200;400&family=Manrope:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.font-logo-main {
+  font-family: 'Michroma', sans-serif;
+}
+
+.font-logo-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+}
 @layer base {
   body {
     background-color: #131411;

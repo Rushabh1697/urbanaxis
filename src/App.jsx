@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ReactLenis, useLenis } from 'lenis/react';
 import AboutUs from './AboutUs';
-import Catalogue from './Catalogue';
+import { Agentation } from 'agentation';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,11 +96,12 @@ const Navbar = () => {
   <>
     <nav className="fixed left-0 top-0 h-screen w-[280px] z-50 bg-surface-container-lowest/80 backdrop-blur-xl border-r border-white/5 py-12 px-10 flex-col justify-between hidden md:flex">
       <div className="flex-none mb-16">
-        <Link to="/"><h1 className="font-headline-md text-[24px] uppercase tracking-[0.3em] text-on-surface leading-normal">URBANAXIS<br/>STUDIO</h1></Link>
+        <Link to="/" className="inline-block w-48">
+          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md" />
+        </Link>
       </div>
       <div className="flex-1 flex flex-col gap-10 items-start justify-center">
         <Link to="/" className={getLinkClass('/')}>Home</Link>
-        <Link to="/projects" className={getLinkClass('/projects')}>Projects</Link>
         <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
         <Link to="/practice" className={getLinkClass('/practice')}>Practice</Link>
         <Link to="/about" className={`${getLinkClass('/about')} whitespace-nowrap`}>About Us</Link>
@@ -110,7 +111,9 @@ const Navbar = () => {
       </div>
     </nav>
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 py-5 px-6 flex md:hidden justify-between items-center ${isScrolled ? 'bg-surface-container-lowest/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent border-transparent'}`}>
-      <Link to="/"><h1 className="font-headline-md text-[18px] uppercase tracking-[0.3em] text-on-surface">URBANAXIS</h1></Link>
+      <Link to="/" className="inline-block w-36">
+        <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md" />
+      </Link>
       <button onClick={toggleMobileMenu} className="text-on-surface p-2 focus:outline-none z-50">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           {isMobileMenuOpen ? (
@@ -121,18 +124,44 @@ const Navbar = () => {
         </svg>
       </button>
     </nav>
-    {isMobileMenuOpen && (
-      <div className="fixed inset-0 z-40 bg-surface-container-lowest flex flex-col items-center justify-center pt-20 md:hidden h-[100dvh] overflow-y-auto">
-        <div className="flex flex-col gap-8 items-center text-center pb-20">
-          <Link to="/" className={getLinkClass('/')}>Home</Link>
-          <Link to="/projects" className={getLinkClass('/projects')}>Projects</Link>
-          <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
-          <Link to="/practice" className={getLinkClass('/practice')}>Practice</Link>
-          <Link to="/about" className={getLinkClass('/about')}>About Us</Link>
-          <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="luxury-hover font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface/70 hover:text-on-surface transition-colors duration-500 mt-8">Contact</a>
-        </div>
-      </div>
-    )}
+    <AnimatePresence>
+      {isMobileMenuOpen && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="fixed inset-0 z-40 bg-surface-container-lowest flex flex-col items-center justify-center pt-20 md:hidden h-[100dvh] overflow-y-auto"
+        >
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
+            }}
+            className="flex flex-col gap-8 items-center text-center pb-20"
+          >
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <Link to="/" className={getLinkClass('/')}>Home</Link>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <Link to="/practice" className={getLinkClass('/practice')}>Practice</Link>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <Link to="/about" className={getLinkClass('/about')}>About Us</Link>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="luxury-hover font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface/70 hover:text-on-surface transition-colors duration-500 mt-8 block">Contact</a>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   </>
 )};
 
@@ -140,8 +169,8 @@ const Footer = () => (
   <footer id="contact" className="gsap-lazy bg-surface-container-lowest w-full py-section-gap border-t border-white/5">
     <div className="grid grid-cols-1 md:grid-cols-4 gap-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
       <div className="md:col-span-1">
-        <div className="flex items-center gap-3 mb-10">
-          <h2 className="font-headline-md text-[20px] uppercase tracking-[0.3em] text-on-surface">URBANAXIS STUDIO</h2>
+        <div className="mb-10 w-48">
+          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md" />
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant/70 leading-relaxed max-w-[280px]">
           Shaping contemporary spaces through
@@ -152,7 +181,6 @@ const Footer = () => (
       <div className="md:col-span-1">
         <h4 className="font-label-sm text-label-sm uppercase tracking-[0.3em] text-secondary mb-10">Explore</h4>
         <ul className="space-y-6">
-          <li><Link to="/projects" className="luxury-hover font-body-md text-on-surface-variant/80 hover:text-on-surface transition-colors inline-block">Projects</Link></li>
           <li><Link to="/narrative" className="luxury-hover font-body-md text-on-surface-variant/80 hover:text-on-surface transition-colors inline-block">Narrative</Link></li>
           <li><Link to="/practice" className="luxury-hover font-body-md text-on-surface-variant/80 hover:text-on-surface transition-colors inline-block">Practice</Link></li>
           <li><Link to="/about" className="luxury-hover font-body-md text-on-surface-variant/80 hover:text-on-surface transition-colors inline-block">About Us</Link></li>
@@ -191,17 +219,14 @@ const Home = () => (
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
         className="relative z-10 text-center max-w-5xl px-margin-mobile flex flex-col items-center pointer-events-none"
       >
-        <p className="font-headline-md text-lg md:text-2xl text-on-surface/90 italic tracking-wide mb-6">
+        <p className="font-headline-md text-lg md:text-2xl text-on-surface/95 italic tracking-wide mb-6 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
           Architecture of Quiet Intent
         </p>
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center pointer-events-auto">
-          <MagneticButton text="View Projects" to="/projects" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
+          <MagneticButton text="About Us" to="/about" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary shadow-lg">
             <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
           </MagneticButton>
-          <MagneticButton text="About Us" to="/about" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
-            <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-          </MagneticButton>
-          <MagneticButton text="Contact" href="#contact" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary">
+          <MagneticButton text="Contact" href="#contact" className="group inline-block relative px-8 py-4 md:px-12 md:py-5 overflow-hidden border border-secondary/40 bg-surface-container-high/30 backdrop-blur-md transition-all hover:border-secondary shadow-lg">
             <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
           </MagneticButton>
         </div>
@@ -211,75 +236,6 @@ const Home = () => (
       {/* We removed the Founder Section from here since it's on a separate page */}
     </>
   );
-
-const Projects = () => {
-  useGSAP(() => {
-    gsap.fromTo(
-      '.project-card',
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.projects-grid',
-          start: 'top 80%',
-        },
-      }
-    );
-  }, []);
-
-  return (
-  <div className="pt-24 gsap-lazy">
-    {/* Featured Projects */}
-    <section className="py-section-gap bg-surface-container-lowest">
-      <div className="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1 }}
-          className="flex justify-between items-end mb-24"
-        >
-          <div>
-            <span className="font-label-sm text-label-sm uppercase tracking-[0.4em] text-secondary mb-6 block">Selected Works</span>
-            <h3 className="font-headline-lg text-headline-lg text-on-surface">Featured Projects</h3>
-          </div>
-        </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 projects-grid">
-          <Link to="/project/the-sea-dream" className="group cursor-pointer block project-card opacity-0">
-            <div className="aspect-[4/5] overflow-hidden mb-10 bg-surface-container relative">
-              <div className="absolute inset-0 bg-surface-container-highest/20 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
-                <img alt="Exterior view of a minimalist residence" className="w-full h-full object-cover grayscale-[50%] transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105" src="/images/prabhadevi-main.jpg?v=2" />
-            </div>
-            <div className="flex justify-between items-start border-t border-white/5 pt-8">
-              <div>
-                <h4 className="font-headline-md text-[28px] text-on-surface mb-2 group-hover:text-secondary transition-colors duration-300">The Sea Dream</h4>
-                <p className="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60">Mumbai</p>
-              </div>
-              <span className="font-label-sm text-label-sm text-secondary/40">01</span>
-            </div>
-          </Link>
-          <Link to="/project/bangalore-house" className="group cursor-pointer block project-card opacity-0">
-            <div className="aspect-[4/5] overflow-hidden mb-10 bg-surface-container relative">
-              <div className="absolute inset-0 bg-surface-container-highest/20 group-hover:bg-transparent transition-colors duration-700 z-10"></div>
-                <img alt="Interior of a modern gallery space" className="w-full h-full object-cover grayscale-[50%] transition-all duration-1000 ease-out group-hover:grayscale-0 group-hover:scale-105" src="/images/banglore-main.jpg?v=2" />
-            </div>
-            <div className="flex justify-between items-start border-t border-white/5 pt-8">
-              <div>
-                <h4 className="font-headline-md text-[28px] text-on-surface mb-2 group-hover:text-secondary transition-colors duration-300">Banglore house</h4>
-                <p className="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant/60">Architecture & Interior, Banglore</p>
-              </div>
-              <span className="font-label-sm text-label-sm text-secondary/40">02</span>
-            </div>
-          </Link>
-          </div>
-      </div>
-    </section>
-  </div>
-)};
 
 const Practice = () => (
   <div className="pt-24 gsap-lazy">
@@ -294,7 +250,7 @@ const Practice = () => (
             </p>
           </div>
           <div className="md:col-start-7 md:col-span-6 relative group overflow-hidden">
-            <img alt="Detailed shot" className="w-full h-[700px] object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHhWQaiiuKmODM6QwMfs7n076oD8xzKpme-3fh-xgjVP7k3NGrATxR1iRiV660xDTRrpESnhBaW_zytI-R8A7jPUAVo18o3xsYqovdWpiEog79FGCX-euFGuFqxe1itUF-9phhKgGMEh7aaUYY7B92oy__cWb3h7RrU91jWNaUzq6nFIP-LqUer0s7M3gi7ILC44I0v0cR1tankzcAhsolbz-cobUkCBr1jfX2-FiPIY-NbukHHpaNVr0g6abFTxTrXE6I8Z5UZA" />
+            <img alt="Detailed shot" className="w-full h-[700px] object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-[10000ms] ease-linear group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHhWQaiiuKmODM6QwMfs7n076oD8xzKpme-3fh-xgjVP7k3NGrATxR1iRiV660xDTRrpESnhBaW_zytI-R8A7jPUAVo18o3xsYqovdWpiEog79FGCX-euFGuFqxe1itUF-9phhKgGMEh7aaUYY7B92oy__cWb3h7RrU91jWNaUzq6nFIP-LqUer0s7M3gi7ILC44I0v0cR1tankzcAhsolbz-cobUkCBr1jfX2-FiPIY-NbukHHpaNVr0g6abFTxTrXE6I8Z5UZA" />
           </div>
         </div>
       </div>
@@ -338,7 +294,7 @@ const GlobalLoader = () => {
     // Fallback timer in case video fails to load or play
     const timer = setTimeout(() => setIsLoading(false), 5000); 
     return () => clearTimeout(timer);
-  }, [location.pathname]);
+  }, []);
 
   return (
     <AnimatePresence>
@@ -398,6 +354,32 @@ const LazyGSAPAnimator = () => {
   return null;
 };
 
+const PageTransition = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, filter: 'blur(10px)' }}
+    animate={{ opacity: 1, filter: 'blur(0px)' }}
+    exit={{ opacity: 0, filter: 'blur(10px)' }}
+    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    className="w-full h-full"
+  >
+    {children}
+  </motion.div>
+);
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/about" element={<PageTransition><AboutUs /></PageTransition>} />
+        <Route path="/practice" element={<PageTransition><Practice /></PageTransition>} />
+        <Route path="/narrative" element={<PageTransition><Narrative /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 export default function App() {
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothTouch: true }}>
@@ -406,21 +388,15 @@ export default function App() {
         <LazyGSAPAnimator />
         <div className="flex min-h-screen w-full">
           <Navbar />
-          <div className="flex-1 md:ml-[280px] flex flex-col min-h-screen w-full">
+          <div className="flex-1 md:ml-[280px] flex flex-col min-h-screen w-full overflow-hidden">
             <main className="flex-1 w-full">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<AboutUs />} />
-                <Route path="/projects" element={<Projects />} />
-                <Route path="/practice" element={<Practice />} />
-                <Route path="/narrative" element={<Narrative />} />
-                <Route path="/project/:projectId" element={<Catalogue />} />
-              </Routes>
+              <AnimatedRoutes />
             </main>
             <Footer />
           </div>
         </div>
       </Router>
+      <Agentation />
     </ReactLenis>
   );
 }

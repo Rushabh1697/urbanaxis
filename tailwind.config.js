@@ -41,6 +41,7 @@ export default {
         "on-secondary": "#412d00",
         "on-error": "#690005",
         "secondary": "#e9c176",
+        "brand-gold": "#cda96d",
         "surface-container-lowest": "#0e0e0c",
         "surface-container-high": "#2a2a27",
         "tertiary-container": "#15110d",
@@ -72,12 +73,14 @@ export default {
       },
       fontFamily: {
         "headline-md": ["Archivo", "sans-serif"],
-        "body-md": ["Space Grotesk", "sans-serif"],
-        "label-sm": ["Space Grotesk", "sans-serif"],
+        "body-md": ["Manrope", "sans-serif"],
+        "label-sm": ["Manrope", "sans-serif"],
         "headline-lg": ["Archivo", "sans-serif"],
         "display-lg": ["Archivo", "sans-serif"],
         "headline-lg-mobile": ["Archivo", "sans-serif"],
-        "body-lg": ["Space Grotesk", "sans-serif"]
+        "body-lg": ["Manrope", "sans-serif"],
+        "logo-main": ["Michroma", "sans-serif"],
+        "logo-sub": ["Montserrat", "sans-serif"]
       },
       fontSize: {
         "headline-md": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
