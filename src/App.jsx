@@ -97,7 +97,7 @@ const Navbar = () => {
     <nav className="fixed left-0 top-0 h-screen w-[280px] z-50 bg-surface-container-lowest/80 backdrop-blur-xl border-r border-white/5 py-12 px-10 flex-col justify-between hidden md:flex">
       <div className="flex-none mb-16">
         <Link to="/" className="inline-block w-48">
-          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md" />
+          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md brightness-0 invert opacity-90" />
         </Link>
       </div>
       <div className="flex-1 flex flex-col gap-10 items-start justify-center">
@@ -112,7 +112,7 @@ const Navbar = () => {
     </nav>
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 py-5 px-6 flex md:hidden justify-between items-center ${isScrolled ? 'bg-surface-container-lowest/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent border-transparent'}`}>
       <Link to="/" className="inline-block w-36">
-        <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md" />
+        <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md brightness-0 invert opacity-90" />
       </Link>
       <button onClick={toggleMobileMenu} className="text-on-surface p-2 focus:outline-none z-50">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,7 +170,7 @@ const Footer = () => (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
       <div className="md:col-span-1">
         <div className="mb-10 w-48">
-          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md" />
+          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md brightness-0 invert opacity-90" />
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant/70 leading-relaxed max-w-[280px]">
           Shaping contemporary spaces through
