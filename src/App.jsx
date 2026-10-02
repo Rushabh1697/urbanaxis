@@ -6,7 +6,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ReactLenis, useLenis } from 'lenis/react';
 import AboutUs from './AboutUs';
+import Elements from './Elements';
 import { Agentation } from 'agentation';
+import logo from './assets/logo.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,11 +99,12 @@ const Navbar = () => {
     <nav className="fixed left-0 top-0 h-screen w-[280px] z-50 bg-surface-container-lowest/80 backdrop-blur-xl border-r border-white/5 py-12 px-10 flex-col justify-between hidden md:flex">
       <div className="flex-none mb-16">
         <Link to="/" className="inline-block w-48">
-          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md brightness-0 invert opacity-90" />
+          <img src={logo} alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md opacity-90" />
         </Link>
       </div>
       <div className="flex-1 flex flex-col gap-10 items-start justify-center">
         <Link to="/" className={getLinkClass('/')}>Home</Link>
+        <Link to="/elements" className={getLinkClass('/elements')}>Elements</Link>
         <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
         <Link to="/practice" className={getLinkClass('/practice')}>Practice</Link>
         <Link to="/about" className={`${getLinkClass('/about')} whitespace-nowrap`}>About Us</Link>
@@ -112,7 +115,7 @@ const Navbar = () => {
     </nav>
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 py-5 px-6 flex md:hidden justify-between items-center ${isScrolled ? 'bg-surface-container-lowest/90 backdrop-blur-xl border-b border-white/5' : 'bg-transparent border-transparent'}`}>
       <Link to="/" className="inline-block w-36">
-        <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md brightness-0 invert opacity-90" />
+        <img src={logo} alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md opacity-90" />
       </Link>
       <button onClick={toggleMobileMenu} className="text-on-surface p-2 focus:outline-none z-50">
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,6 +150,9 @@ const Navbar = () => {
               <Link to="/" className={getLinkClass('/')}>Home</Link>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
+              <Link to="/elements" className={getLinkClass('/elements')}>Elements</Link>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
               <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
@@ -170,7 +176,7 @@ const Footer = () => (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
       <div className="md:col-span-1">
         <div className="mb-10 w-48">
-          <img src="/images/logo.png" alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md brightness-0 invert opacity-90" />
+          <img src={logo} alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md opacity-90" />
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant/70 leading-relaxed max-w-[280px]">
           Shaping contemporary spaces through
@@ -356,9 +362,9 @@ const LazyGSAPAnimator = () => {
 
 const PageTransition = ({ children }) => (
   <motion.div
-    initial={{ opacity: 0, filter: 'blur(10px)' }}
-    animate={{ opacity: 1, filter: 'blur(0px)' }}
-    exit={{ opacity: 0, filter: 'blur(10px)' }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     className="w-full h-full"
   >
@@ -372,6 +378,7 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+        <Route path="/elements" element={<PageTransition><Elements /></PageTransition>} />
         <Route path="/about" element={<PageTransition><AboutUs /></PageTransition>} />
         <Route path="/practice" element={<PageTransition><Practice /></PageTransition>} />
         <Route path="/narrative" element={<PageTransition><Narrative /></PageTransition>} />
@@ -388,7 +395,7 @@ export default function App() {
         <LazyGSAPAnimator />
         <div className="flex min-h-screen w-full">
           <Navbar />
-          <div className="flex-1 md:ml-[280px] flex flex-col min-h-screen w-full overflow-hidden">
+          <div className="flex-1 md:ml-[280px] flex flex-col min-h-screen w-full">
             <main className="flex-1 w-full">
               <AnimatedRoutes />
             </main>
