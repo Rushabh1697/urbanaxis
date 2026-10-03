@@ -6,7 +6,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { ReactLenis, useLenis } from 'lenis/react';
 import AboutUs from './AboutUs';
-import Elements from './Elements';
 import { Agentation } from 'agentation';
 import logo from './assets/logo.png';
 
@@ -104,7 +103,6 @@ const Navbar = () => {
       </div>
       <div className="flex-1 flex flex-col gap-10 items-start justify-center">
         <Link to="/" className={getLinkClass('/')}>Home</Link>
-        <Link to="/elements" className={getLinkClass('/elements')}>Elements</Link>
         <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
         <Link to="/practice" className={getLinkClass('/practice')}>Practice</Link>
         <Link to="/about" className={`${getLinkClass('/about')} whitespace-nowrap`}>About Us</Link>
@@ -150,9 +148,6 @@ const Navbar = () => {
               <Link to="/" className={getLinkClass('/')}>Home</Link>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-              <Link to="/elements" className={getLinkClass('/elements')}>Elements</Link>
-            </motion.div>
-            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
               <Link to="/narrative" className={getLinkClass('/narrative')}>Narrative</Link>
             </motion.div>
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
@@ -171,9 +166,10 @@ const Navbar = () => {
   </>
 )};
 
-const Footer = () => (
-  <footer id="contact" className="gsap-lazy bg-surface-container-lowest w-full py-section-gap border-t border-white/5">
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+const Footer = () => {
+  return (
+    <footer id="contact" className="gsap-lazy bg-surface-container-lowest w-full min-h-screen py-section-gap border-t border-white/5 flex flex-col justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto w-full">
       <div className="md:col-span-1">
         <div className="mb-10 w-48">
           <img src={logo} alt="Urban Axis Studio" className="w-full h-auto object-contain drop-shadow-md opacity-90" />
@@ -211,7 +207,8 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-);
+  );
+};
 
 const Home = () => (
   <>
@@ -366,7 +363,8 @@ const PageTransition = ({ children }) => (
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-    className="w-full h-full"
+    className="w-full"
+    style={{ transform: 'none' }}
   >
     {children}
   </motion.div>
@@ -378,7 +376,6 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-        <Route path="/elements" element={<PageTransition><Elements /></PageTransition>} />
         <Route path="/about" element={<PageTransition><AboutUs /></PageTransition>} />
         <Route path="/practice" element={<PageTransition><Practice /></PageTransition>} />
         <Route path="/narrative" element={<PageTransition><Narrative /></PageTransition>} />

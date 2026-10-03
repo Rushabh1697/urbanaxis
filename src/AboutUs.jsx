@@ -37,7 +37,7 @@ const VirenMakwanaSection = () => {
               <img 
                 src="/images/virenmakwana.jpeg" 
                 alt="Viren Makwana" 
-                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+                className="w-full h-full object-cover md:grayscale md:opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
                 onError={(e) => {
                   e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop"; 
                 }}
@@ -82,7 +82,7 @@ const SameerPashteSection = () => {
               <img 
                 src="/images/sameer-pashte.jpg" 
                 alt="Ar. Sameer Pashte" 
-                className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+                className="w-full h-full object-cover md:grayscale md:opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
                 onError={(e) => {
                   e.target.src = "https://images.unsplash.com/photo-1544839655-15fa3cdd3a4b?q=80&w=800&auto=format&fit=crop"; 
                 }}
