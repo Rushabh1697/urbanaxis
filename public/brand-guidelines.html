@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Axis Studio - Brand Guidelines</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@200;400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #cda96d;
+            --color-background: #0e0e0c;
+            --color-surface: #20201d;
+            --color-text: #e5e2dd;
+            --typography-font-heading: 'Michroma', sans-serif;
+            --typography-font-body: 'Manrope', sans-serif;
+            --primitive-gradient-primary: linear-gradient(135deg, #cda96d, #e9c176);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--color-background);
+            color: var(--color-text);
+            font-family: var(--typography-font-body);
+            overflow: hidden;
+        }
+
+        .slide-deck {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @media (min-width: 769px) {
+            .slide-deck {
+                max-width: calc(100vh * 16 / 9);
+                max-height: calc(100vw * 9 / 16);
+                margin: auto;
+                position: absolute;
+                inset: 0;
+            }
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            background: var(--color-background);
+            overflow: hidden;
+        }
+
+        .slide.active { opacity: 1; visibility: visible; }
+
+        .slide-content {
+            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        h1, h2, h3 { font-family: var(--typography-font-heading); font-weight: normal; }
+        .slide-title {
+            font-size: clamp(32px, 6vw, 64px);
+            background: var(--primitive-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-transform: lowercase;
+        }
+
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 200;
+            letter-spacing: 0.8em;
+            text-transform: lowercase;
+            font-size: 16px;
+            margin-top: -10px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 80%;
+            text-align: left;
+        }
+
+        .color-swatch {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: var(--color-primary);
+            transition: width 0.3s;
+            z-index: 1000;
+        }
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+        }
+        .nav-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover { background: rgba(205,169,109,0.2); border-color: #cda96d; }
+        .slide-counter { color: rgba(255,255,255,0.4); font-size: 14px; font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="slide-deck">
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <div class="slide-content">
+            <h1 class="slide-title" style="font-size: 80px;">urban axis</h1>
+            <div style="width: 200px; height: 1px; background: #cda96d; margin: 10px 0;"></div>
+            <p class="subtitle" style="margin-right: -0.8em;">studio</p>
+            <p style="margin-top: 40px; font-style: italic; color: #a0a0a0;">Brand Identity & Design System</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Philosophy -->
+    <div class="slide">
+        <div class="slide-content" style="text-align: left; max-width: 800px;">
+            <h2 class="slide-title" style="font-size: 32px; text-align: left; margin-bottom: 20px;">Architecture of Quiet Intent</h2>
+            <p style="font-size: 24px; line-height: 1.6; color: #c4c7c7; font-weight: 300;">
+                Our digital presence reflects our physical practice: a pursuit of spatial permanence. We reject loud decorations in favor of deliberate, functional aesthetic choices.
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 3: Typography -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="slide-title" style="margin-bottom: 40px;">Typography Architecture</h2>
+            <div class="grid-2">
+                <div>
+                    <h3 style="font-family: 'Michroma', sans-serif; font-size: 24px; color: #cda96d; margin-bottom: 10px; text-transform: lowercase;">Logo Primary</h3>
+                    <p style="font-size: 16px; color: #a0a0a0; margin-bottom: 30px;">Michroma — Wide, geometric, futuristic. Represents structural integrity.</p>
+                    
+                    <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 200; font-size: 24px; color: #cda96d; margin-bottom: 10px; text-transform: lowercase; letter-spacing: 0.4em;">Logo Sub</h3>
+                    <p style="font-size: 16px; color: #a0a0a0;">Montserrat (Weight 200) — Monoline, minimalist. Represents negative space.</p>
+                </div>
+                <div>
+                    <h3 style="font-family: 'Manrope', sans-serif; font-size: 24px; color: #cda96d; margin-bottom: 10px;">Body Copy</h3>
+                    <p style="font-size: 16px; color: #a0a0a0; margin-bottom: 20px;">Manrope — Clean, highly legible sans-serif for content.</p>
+                    <p style="font-size: 14px; line-height: 1.8; border-left: 2px solid #cda96d; padding-left: 16px;">
+                        "A motivated and detail-oriented architecture enthusiast with a fresh perspective and a strong commitment to learning."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Color System -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2 class="slide-title" style="margin-bottom: 40px;">Color Palette</h2>
+            <div style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap;">
+                <div style="text-align: left;">
+                    <div class="color-swatch" style="background: #0e0e0c;"></div>
+                    <p style="font-weight: bold;">Surface Lowest</p>
+                    <p style="font-size: 14px; color: #888;">#0e0e0c</p>
+                </div>
+                <div style="text-align: left;">
+                    <div class="color-swatch" style="background: #20201d;"></div>
+                    <p style="font-weight: bold;">Surface</p>
+                    <p style="font-size: 14px; color: #888;">#20201d</p>
+                </div>
+                <div style="text-align: left;">
+                    <div class="color-swatch" style="background: #e5e2dd;"></div>
+                    <p style="font-weight: bold; color: #111;">On Surface</p>
+                    <p style="font-size: 14px; color: #888;">#e5e2dd</p>
+                </div>
+                <div style="text-align: left;">
+                    <div class="color-swatch" style="background: #cda96d;"></div>
+                    <p style="font-weight: bold; color: #cda96d;">Brand Gold</p>
+                    <p style="font-size: 14px; color: #888;">#cda96d</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Motion & UX -->
+    <div class="slide">
+        <div class="slide-content" style="max-width: 800px; text-align: left;">
+            <h2 class="slide-title" style="margin-bottom: 30px; text-align: left;">Motion & Interaction</h2>
+            <ul style="font-size: 20px; line-height: 2; color: #c4c7c7; list-style-type: none; padding: 0;">
+                <li style="margin-bottom: 16px;"><strong style="color: #cda96d;">Fluid Routing:</strong> Page transitions use Framer Motion for a seamless, blur-fade effect.</li>
+                <li style="margin-bottom: 16px;"><strong style="color: #cda96d;">Cinematic Hover:</strong> Project imagery scales linearly over 10 seconds, mimicking a slow Ken Burns camera pan.</li>
+                <li style="margin-bottom: 16px;"><strong style="color: #cda96d;">Staggered Menus:</strong> The mobile navigation elegantly waterfalls into view, establishing hierarchy.</li>
+            </ul>
+        </div>
+    </div>
+
+    </div><!-- /.slide-deck -->
+
+    <!-- Navigation -->
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <span class="slide-counter"><span id="current">1</span> / <span id="total">5</span></span>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let current = 1;
+        const total = document.querySelectorAll('.slide').length;
+        document.getElementById('total').textContent = total;
+
+        function showSlide(n) {
+            if (n < 1) n = 1;
+            if (n > total) n = total;
+            current = n;
+            document.querySelectorAll('.slide').forEach((s, i) => {
+                s.classList.toggle('active', i === n - 1);
+            });
+            document.getElementById('current').textContent = n;
+            document.getElementById('progressBar').style.width = (n / total * 100) + '%';
+        }
+
+        function nextSlide() { showSlide(current + 1); }
+        function prevSlide() { showSlide(current - 1); }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.nav-controls')) nextSlide();
+        });
+
+        showSlide(1);
+    </script>
+</body>
+</html>
